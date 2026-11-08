@@ -1,0 +1,889 @@
+<DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Waifu Gallery</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+        :root {
+            --background: #faf8f7;
+            --surface: #ffffff;
+            --primary: #c9a7b5;
+            --primary-dark: #a77f91;
+            --secondary: #e8dce2;
+            --text: #51474d;
+            --muted: #8b7d84;
+            --border: #eee5e9;
+            --shadow: 0 12px 30px rgba(110, 80, 95, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(250, 248, 247, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            max-width: 1150px;
+            margin: auto;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: "Playfair Display", serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            color: var(--muted);
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-dark);
+        }
+
+        .hero {
+            min-height: 85vh;
+            padding: 80px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(232, 220, 226, 0.6),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(222, 215, 231, 0.45),
+                    transparent 35%
+                );
+        }
+
+        .hero-content {
+            max-width: 750px;
+            animation: fadeUp 1s ease both;
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 7px 18px;
+            margin-bottom: 22px;
+            border: 1px solid var(--secondary);
+            border-radius: 30px;
+            color: var(--primary-dark);
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .hero h1 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            line-height: 1.2;
+            margin-bottom: 22px;
+            color: var(--text);
+        }
+
+        .hero h1 span {
+            color: var(--primary-dark);
+        }
+
+        .hero p {
+            max-width: 560px;
+            margin: 0 auto 32px;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 26px;
+            border-radius: 30px;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition:
+                transform 0.3s,
+                background 0.3s,
+                box-shadow 0.3s;
+        }
+
+        .button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(167, 127, 145, 0.2);
+        }
+
+        section {
+            padding: 90px 24px;
+            scroll-margin-top: 80px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-heading span {
+            display: block;
+            color: var(--primary-dark);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .section-heading h2 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 12px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            max-width: 550px;
+            margin: auto;
+        }
+
+        .about {
+            background: var(--surface);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 55px;
+            align-items: center;
+        }
+
+        .about-image {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.04);
+        }
+
+        .about-text h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 1.8rem;
+            margin-bottom: 18px;
+        }
+
+        .about-text p {
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .about-note {
+            margin-top: 24px;
+            padding: 18px 22px;
+            border-left: 3px solid var(--primary);
+            background: #faf6f8;
+            border-radius: 0 12px 12px 0;
+            color: var(--primary-dark);
+            font-style: italic;
+        }
+
+        .gallery {
+            background: var(--background);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition:
+                transform 0.4s,
+                box-shadow 0.4s;
+            animation: fadeUp 0.8s ease both;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 40px rgba(110, 80, 95, 0.13);
+        }
+
+        .card-image {
+            height: 380px;
+            overflow: hidden;
+            background: var(--secondary);
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-tag {
+            display: inline-block;
+            padding: 5px 13px;
+            margin-bottom: 12px;
+            border-radius: 20px;
+            background: #f3eaf0;
+            color: var(--primary-dark);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .card-content h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+        }
+
+        .card-content p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .contact {
+            background: var(--surface);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 35px;
+        }
+
+        .contact-info,
+        .contact-form {
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            background: #fffdfd;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-info h3,
+        .contact-form h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .contact-info > p {
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 16px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            color: var(--muted);
+            transition: 0.3s;
+        }
+
+        .social-link:hover {
+            border-color: var(--primary);
+            color: var(--primary-dark);
+            background: #faf6f8;
+            transform: translateX(4px);
+        }
+
+        .social-icon {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--secondary);
+            color: var(--primary-dark);
+            border-radius: 50%;
+            font-weight: 700;
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--text);
+            outline: none;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(201, 167, 181, 0.15);
+        }
+
+        .form-group textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .contact-form .button {
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .surprise {
+            text-align: center;
+            padding: 65px 24px;
+            background: #f4edf1;
+        }
+
+        .surprise h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .surprise p {
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        footer {
+            padding: 28px 24px;
+            text-align: center;
+            background: var(--background);
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        footer span {
+            color: var(--primary-dark);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .nav-links {
+                gap: 18px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                min-height: 75vh;
+            }
+
+            .about-content,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content {
+                gap: 30px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-image {
+                height: 350px;
+            }
+
+            section {
+                padding: 70px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 13px;
+            }
+
+            .nav-links a {
+                font-size: 0.82rem;
+            }
+
+            .card-image {
+                height: 280px;
+            }
+
+            .contact-info,
+            .contact-form {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <a href="#home" class="logo">My Waifu Gallery</a>
+
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+
+            <span class="hero-label">
+                A Little Corner of My World
+            </span>
+
+            <h1>
+                My Favorite <span>Characters</span>
+            </h1>
+
+            <p>
+                Sebuah galeri kecil yang berisi karakter-karakter
+                favoritku dari dunia Genshin Impact.
+                Mereka punya cerita, kepribadian, dan pesona
+                yang membuatku menyukainya.
+            </p>
+
+            <a href="#gallery" class="button">
+                Explore Gallery
+            </a>
+
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+
+            <div class="section-heading">
+                <span>About This Website</span>
+                <h2>A Small Personal Gallery</h2>
+                <p>
+                    Tempat sederhana untuk menyimpan karakter
+                    favorit dan hal-hal yang membuatku menyukai mereka.
+                </p>
+            </div>
+
+            <div class="about-content">
+
+                <div class="about-image">
+                    <img
+                        src="images/furina.jpg"
+                        alt="Furina dari Genshin Impact"
+                    >
+                </div>
+
+                <div class="about-text">
+
+                    <h3>Welcome to My Little World</h3>
+
+                    <p>
+                        Website ini dibuat sebagai galeri pribadi
+                        untuk karakter-karakter favoritku.
+                        Setiap karakter memiliki daya tariknya
+                        masing-masing, mulai dari desain, cerita,
+                        hingga kepribadiannya.
+                    </p>
+
+                    <p>
+                        Aku ingin membuat tempat kecil yang terasa
+                        nyaman untuk menyimpan dan menampilkan
+                        karakter yang kusukai.
+                    </p>
+
+                    <div class="about-note">
+                        "Every character has a story worth remembering."
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery" id="gallery">
+        <div class="container">
+
+            <div class="section-heading">
+                <span>My Collection</span>
+                <h2>Favorite Characters</h2>
+                <p>
+                    Beberapa karakter yang memiliki tempat
+                    spesial di dalam galeri ini.
+                </p>
+            </div>
+
+            <div class="gallery-grid">
+
+                <article class="card">
+
+                    <div class="card-image">
+                        <img
+                            src="images/furina.jpg"
+                            alt="Furina"
+                        >
+                    </div>
+
+                    <div class="card-content">
+
+                        <span class="card-tag">
+                            Hydro · Fontaine
+                        </span>
+
+                        <h3>Furina</h3>
+
+                        <p>
+                            Sang mantan Hydro Archon yang memiliki
+                            pesona teatrikal dan kepribadian
+                            yang penuh warna. Di balik penampilannya
+                            yang percaya diri, tersimpan cerita
+                            yang begitu menyentuh.
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <article class="card">
+
+                    <div class="card-image">
+                        <img
+                            src="images/columbina.jpg"
+                            alt="Columbina"
+                        >
+                    </div>
+
+                    <div class="card-content">
+
+                        <span class="card-tag">
+                            Mysterious · Fatui
+                        </span>
+
+                        <h3>Columbina</h3>
+
+                        <p>
+                            Sosok misterius dengan aura yang tenang
+                            dan elegan. Pesonanya terasa unik,
+                            membuatnya menjadi salah satu karakter
+                            yang menarik untuk diperhatikan.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+
+            <div class="section-heading">
+                <span>Get In Touch</span>
+                <h2>Let's Connect</h2>
+                <p>
+                    Punya karakter favorit yang sama?
+                    Kamu bisa menghubungiku melalui media sosial
+                    atau mengirim pesan lewat form berikut.
+                </p>
+            </div>
+
+            <div class="contact-grid">
+
+                <div class="contact-info">
+
+                    <h3>Find Me Here</h3>
+
+                    <p>
+                        Kunjungi media sosialku untuk melihat
+                        hal-hal menarik lainnya.
+                    </p>
+
+                    <div class="social-links">
+
+                        <a
+                            href="https://www.instagram.com/fabiann.yaann?igsh=MXc2d3VjNXhvbGtzYw=="
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="social-link"
+                        >
+                            <span class="social-icon">IG</span>
+                            <span>Instagram</span>
+                        </a>
+
+                        <a
+                            href="https://www.tiktok.com/@pancaaakeeeee?_r=1&_t=ZS-9BDtpAEPsTV"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="social-link"
+                        >
+                            <span class="social-icon">TT</span>
+                            <span>TikTok</span>
+                        </a>
+
+                        <a
+                            href="https://wa.me/6281584961546"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="social-link"
+                        >
+                            <span class="social-icon">WA</span>
+                            <span>WhatsApp</span>
+                        </a>
+
+                        <a
+                            href="mailto:fabianalfarizki89@gmail.com"
+                            class="social-link"
+                        >
+                            <span class="social-icon">@</span>
+                            <span>Email</span>
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="contact-form">
+
+                    <h3>Leave a Message</h3>
+
+                    <form onsubmit="kirimPesan(event)">
+
+                        <div class="form-group">
+                            <label for="nama">Your Name</label>
+
+                            <input
+                                type="text"
+                                id="nama"
+                                name="nama"
+                                placeholder="Masukkan namamu"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="nama@email.com"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pesan">Your Message</label>
+
+                            <textarea
+                                id="pesan"
+                                name="pesan"
+                                placeholder="Tulis pesanmu di sini..."
+                                required
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="button">
+                            Send Message
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="surprise">
+
+        <h2>A Little Surprise</h2>
+
+        <p>
+            Klik tombol di bawah untuk mendapatkan pesan kecil.
+        </p>
+
+        <button
+            class="button"
+            onclick="tampilkanPesan()"
+        >
+            Click Me ♡
+        </button>
+
+    </section>
+
+    <footer>
+        <p>
+            Made with <span>♡</span> and a little bit of magic.
+        </p>
+
+        <p>
+            © 2026 My Waifu Gallery
+        </p>
+    </footer>
+
+    <script>
+
+        function tampilkanPesan() {
+            alert(
+                "Thank you for visiting my little gallery! ♡"
+            );
+        }
+
+        function kirimPesan(event) {
+            event.preventDefault();
+
+            const nama = document.getElementById("nama").value;
+            const email = document.getElementById("email").value;
+            const pesan = document.getElementById("pesan").value;
+
+            const alamatEmail = "fabianalfarizki89@gmail.com";
+
+            const subjek = encodeURIComponent(
+                "Pesan dari My Waifu Gallery"
+            );
+
+            const isiPesan = encodeURIComponent(
+                "Nama: " + nama +
+                "\nEmail: " + email +
+                "\n\nPesan:\n" + pesan
+            );
+
+            const gmailLink =
+                "https://mail.google.com/mail/?view=cm&fs=1&to=" + alamatEmail +
+                encodeURIComponent(alamatEmail) +
+                "&su=" + subjek +
+                "&body=" + isiPesan;
+
+            window.open(gmailLink, "_blank");
+        }
+
+    </script>
+
+</body>
+</html>
